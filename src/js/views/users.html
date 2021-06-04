@@ -1,0 +1,225 @@
+<div class="oj-hybrid-padding">
+  <h1>Users</h1>
+  <div>
+    <oj-dialog id="createUserDialog" dialog-title="Create new user">
+      <div slot="body">
+        <oj-input-text
+          id="username-input"
+          value="{{userName}}"
+          label-hint="User name"
+          label-edge="inside"
+          class="formfield-padding"
+        ></oj-input-text>
+        <oj-input-password
+          id="userpassword-input"
+          value="{{userPassword}}"
+          label-hint="User password"
+          label-edge="inside"
+          class="formfield-padding"
+      ></oj-input-password>
+        <oj-input-text
+          id="userdisplayname-input"
+          value="{{userDisplayName}}"
+          label-hint="Display name"
+          label-edge="inside"
+          class="formfield-padding"
+        ></oj-input-text>
+        <oj-combobox-one
+          id="usertype-input"
+          value="{{userType}}"
+          label-hint="User type"
+          label-edge="inside"
+          class="oj-form-control-max-width-md formfield-padding"
+        >
+          <oj-option value="ADMIN">ADMIN</oj-option>
+          <oj-option value="USER">USER</oj-option>
+        </oj-combobox-one>
+        <oj-checkboxset
+          id="useractive-input"
+          label-hint="User active"
+          label-edge="inside"
+          value="{{userActive}}"
+        >
+          <oj-option value="Y">ACTIVE</oj-option>
+        </oj-checkboxset>
+      </div>
+      <div slot="footer">
+        <oj-button id="saveButton" on-oj-action="[[save]]">Save </oj-button>
+        <oj-button id="cancelButton" on-oj-action="[[cancel]]"
+          >Cancel
+        </oj-button>
+      </div>
+    </oj-dialog>
+
+    <oj-dialog id="updateUserDialog" dialog-title="Update user">
+      <div slot="body">
+        <oj-input-text
+          id="username-input"
+          value="{{userName}}"
+          label-hint="User name"
+          label-edge="inside"
+          readonly="true"
+          class="formfield-padding"
+        ></oj-input-text>
+        <oj-input-password
+          id="userpassword-input"
+          value="{{userPassword}}"
+          label-hint="User password"
+          label-edge="inside"
+          class="formfield-padding"
+        ></oj-input-password>
+        <oj-input-text
+          id="userdisplayname-input"
+          value="{{userDisplayName}}"
+          label-hint="Display name"
+          label-edge="inside"
+          class="formfield-padding"
+        ></oj-input-text>
+        <oj-combobox-one
+          id="usertype-input"
+          value="{{userType}}"
+          label-hint="User type"
+          label-edge="inside"
+          class="oj-form-control-max-width-md formfield-padding"
+        >
+          <oj-option value="ADMIN">ADMIN</oj-option>
+          <oj-option value="USER">USER</oj-option>
+        </oj-combobox-one>
+        <oj-checkboxset
+          id="useractive-input"
+          label-hint="User active"
+          label-edge="inside"
+          value="{{userActive}}"
+        >
+          <oj-option value="Y">ACTIVE</oj-option>
+        </oj-checkboxset>      </div>
+      <div slot="footer">
+        <oj-button id="saveButton" on-oj-action="[[saveUpdate]]"
+          >Save
+        </oj-button>
+        <oj-button id="cancelButton" on-oj-action="[[cancelUpdate]]"
+          >Cancel
+        </oj-button>
+      </div>
+    </oj-dialog>
+
+    <oj-dialog id="deleteUserDialog" dialog-title="Update user">
+      <div slot="body">
+        Are you sure you want to delete user
+        <oj-bind-text value="[[deletedUserName]]"></oj-bind-text>?
+      </div>
+      <div slot="footer">
+        <oj-button id="saveButton" on-oj-action="[[okDelete]]">
+          <oj-avatar
+            id="saveButtonOk"
+            size="xxs"
+            initials="AB"
+            slot="startIcon"
+            src="css/images/ok_24.png"
+          >
+          </oj-avatar>
+          OK
+        </oj-button>
+        <oj-button id="cancelButton" on-oj-action="[[cancelDelete]]">
+          <oj-avatar
+            id="saveButtonCancel"
+            size="xxs"
+            initials="AB"
+            slot="startIcon"
+            src="css/images/cancel_24.png"
+          >
+          </oj-avatar>
+          Cancel
+        </oj-button>
+      </div>
+    </oj-dialog>
+
+    <oj-button
+      id="buttonOpener"
+      on-oj-action="[[open]]"
+      chroming="callToAction"
+    >
+      Add new user
+      <oj-avatar
+        id="jpg2"
+        role="img"
+        aria-label="Avatar of Amy Bartlet"
+        size="xxs"
+        initials="AB"
+        slot="startIcon"
+        src="css/images/add_24.png"
+      >
+      </oj-avatar>
+    </oj-button>
+
+    <oj-table
+      id="table"
+      aria-label="Users table"
+      data="[[pagingDataProvider]]"
+      on-selected-changed="{{selectedChangedListener}}"
+      selection-mode='{"row":"single"}'
+      columns='[{"headerText": "Actions", 
+      "template": "cellTemplate",
+      "headerClassName": "oj-sm-only-hide",
+      "className": "oj-sm-only-hide",
+      "width": "150"},
+      {"headerText": "User name", "field": "userName"},
+                  {"headerText": "Display name", "field": "userDisplayName"},
+                  {"headerText": "User type", "field": "userType"},
+                  {"headerText": "User active", "field": "userActive"}]'
+      class="oj-sm-width-full"
+    >
+      <template slot="cellTemplate" data-oj-as="cell">
+        <oj-button
+          id="buttonOpener"
+          on-oj-action="[[openUpdate]]"
+          chroming="borderless"
+        >
+          <oj-avatar
+            id="update"
+            role="img"
+            aria-label="Edit"
+            size="xxs"
+            initials="AB"
+            slot="startIcon"
+            src="css/images/edit_24.png"
+          >
+          </oj-avatar>
+        </oj-button>
+        <oj-button
+          id="buttonDelete"
+          on-oj-action="[[deleteUser]]"
+          chroming="borderless"
+        >
+          <oj-avatar
+            id="update"
+            role="img"
+            aria-label="Update"
+            size="xxs"
+            initials="AB"
+            slot="startIcon"
+            src="css/images/delete_24.png"
+          >
+          </oj-avatar>
+        </oj-button>
+      </template>
+      <oj-paging-control
+        id="paging"
+        data="[[pagingDataProvider]]"
+        page-size="4"
+        slot="bottom"
+      >
+      </oj-paging-control>
+    </oj-table>
+    <oj-messages
+      id="oj-messages-id"
+      messages="[[messagesDataprovider]]"
+      display="notification"
+      display-options.category="none"
+      position='{"my":{"vertical" :"top", "horizontal": "end"}, 
+               "at": {"vertical": "top", "horizontal": "end"},
+               "of": "window"}'
+    >
+    </oj-messages>
+  </div>
+</div>
